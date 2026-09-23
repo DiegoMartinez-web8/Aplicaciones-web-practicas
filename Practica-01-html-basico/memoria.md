@@ -23,3 +23,9 @@ Para centrar un elemento se usa la propiedad `text-align`
 ```html
 <h1>Hola mundo</h1>
 ```
+> Esto es una nota destacada.
+
+|  Práctica     |     Fecha  | Estado      |             
+|---------------|------------|-------------|
+| Práctica 1    | 10/09/2026 | Terminada   |
+| Práctica 2    | 17/09/2026 | En progreso |

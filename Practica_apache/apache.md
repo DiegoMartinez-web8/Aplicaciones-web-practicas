@@ -3,23 +3,27 @@
 Comprobamos el sistema.
 
 **Comando ejecutado:**
-```bash
-Actualiza la lista de paquetes y el sistema:
 
+Actualiza la lista de paquetes y el sistema:
+```bash
 sudo apt update
 sudo apt upgrade -y
-
+```
 Comprueba la versión del sistema:
 
+```bash
 lsb_release -a
 
 ```
+![captura 1](./imagenes/Captura1.appweb.png)
+
 ### Apartado 2: Instalación apache
 ```bash
 sudo apt install apache2 -y
-
+```
 Comprueba la versión instalada:
 
+```bash
 apache2 -v
 
 ```

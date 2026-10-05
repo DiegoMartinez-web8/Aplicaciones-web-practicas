@@ -19,7 +19,7 @@ lsb_release -a
 
 ---
 
-### Apartado 2: Instalación apache
+### Apartado 2: Instalación apacheCaptura-de-appweb 2.png
 ```bash
 sudo apt install apache2 -y
 ```
@@ -49,7 +49,7 @@ sudo systemctl status apache2
 
 ``bash
 sudo ss -tulpn | grep apache2
-``
+``appweb
 
 3.3. Prueba desde el terminal y desde el navegador
 ```bash
@@ -59,4 +59,6 @@ curl -I http://localhost
 Desde el navegador (idealmente de otro equipo de la red) accede a http://IP_DE_TU_SERVIDOR. Debe aparecer la página "Apache2 Ubuntu Default Page".
 Correcto
 
----
+ Captura del estado del servicio y de la página por defecto en el navegador
+ ![captura 1](./imagenes/Captura-de-appweb.2.png)
+ 

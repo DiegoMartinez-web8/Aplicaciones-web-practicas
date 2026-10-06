@@ -107,10 +107,11 @@ Conviene usar reload en lugar de restart cuando haces cambios en la configuraci�
 ### Apartado 5. Ficheros y directorios importantes
 Explora la estructura de configuración:
 
-´´´bash
+```bash
 ls -l /etc/apache2/
-´´
+```
 
+ ![captura 1](./imagenes/Captura-ls-l-apache.png)
 
 | Ruta | Descripción |
 | :--- | :--- |
@@ -124,4 +125,8 @@ ls -l /etc/apache2/
 | `/var/www/html/` | Directorio raíz por defecto (DocumentRoot) |
 | `/var/log/apache2/access.log` | Registro de accesos |
 | `/var/log/apache2/error.log` | Registro de errores |
- 
+
+Comprueba que los ficheros de sites-enabled son enlaces simbólicos:
+```bash
+ls -l /etc/apache2/sites-enabled/
+``` 

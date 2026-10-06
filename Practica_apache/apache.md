@@ -128,6 +128,41 @@ ls -l /etc/apache2/
 | `/var/log/apache2/access.log` | Registro de accesos |
 | `/var/log/apache2/error.log` | Registro de errores |
 
+
+### ¿Por qué Apache usa enlaces simbólicos entre los directorios *-available y *-enabled?
 Comprueba que los ficheros de sites-enabled son enlaces simbólicos:
 Apache usa enlaces simbólicos para separar la creación de un sitio o módulo de su activación: las configuraciones se guardan en *-available y solo se enlazan en *-enabled para activarse, lo que permite habilitar o deshabilitar servicios al instante sin borrar archivos ni alterar la configuración principal.
+
+### Apartado 6. Modificaciones típicas del servicio
+Haz siempre una copia de seguridad antes de modificar un fichero:
+```bash
+sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
+``
+6.1. Cambiar la página de inicio
+```bash
+echo "<h1>Servidor de TU NOMBRE</h1>" | sudo tee /var/www/html/index.html
+```
+
+6.2. Cambiar el puerto de escucha (por ejemplo, al 8080)
+Edita /etc/apache2/ports.conf y el VirtualHost de 000-default.conf:
+```bash
+sudo nano /etc/apache2/ports.conf
+sudo nano /etc/apache2/sites-available/000-default.conf
+```
+Cambia Listen 80 por Listen 8080 y <VirtualHost *:80> por <VirtualHost *:8080>. Después:
+```bash
+sudo apache2ctl configtest
+sudo systemctl reload apache2
+curl -I http://localhost:8080
+```
+Vuelve a dejar el puerto 80 cuando termines este punto.
+
+6.3. Definir el nombre del servidor (elimina el aviso "Could not reliably determine the server's fully qualified domain name")
+```bash
+echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/servername.conf
+sudo a2enconf servername
+sudo systemctl reload apache2
+```
+6.4. Cambiar el correo del administrador (ServerAdmin en el fichero del sitio).
+6.5. Personalizar una página de error (por ejemplo, 404) con la directiva ErrorDocument.
 

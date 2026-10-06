@@ -83,6 +83,8 @@ Apache Secure: Abre solo el puerto 443 para tráfico web seguro y encriptado (HT
 
 Apache Full: Abre ambos puertos (80 y 443) para permitir tanto conexiones HTTP como HTTPS.
 
+### Apartado 4. Comandos principales de administración
+
 | Comando | Función |
 | :--- | :--- |
 | `sudo systemctl start apache2` | Inicia el servicio |
@@ -101,4 +103,25 @@ Apache Full: Abre ambos puertos (80 y 443) para permitir tanto conexiones HTTP c
 ### ¿Cuándo conviene usar reload en lugar de restart?
 
 Conviene usar reload en lugar de restart cuando haces cambios en la configuración y quieres aplicarlos sin cortar las conexiones activas de los usuarios, mientras que restart detiene por completo el servicio y corta todas las sesiones en curso.
+
+### Apartado 5. Ficheros y directorios importantes
+Explora la estructura de configuración:
+
+´´´bash
+ls -l /etc/apache2/
+´´
+
+
+| Ruta | Descripción |
+| :--- | :--- |
+| `/etc/apache2/apache2.conf` | Fichero de configuración principal |
+| `/etc/apache2/ports.conf` | Puertos en los que escucha Apache |
+| `/etc/apache2/sites-available/` | Sitios disponibles (definidos, no necesariamente activos) |
+| `/etc/apache2/sites-enabled/` | Sitios activos (enlaces simbólicos a sites-available) |
+| `/etc/apache2/mods-available/` y `mods-enabled/` | Módulos disponibles y activos |
+| `/etc/apache2/conf-available/` y `conf-enabled/` | Fragmentos de configuración disponibles y activos |
+| `/etc/apache2/envvars` | Variables de entorno (usuario y grupo de ejecución, etc.) |
+| `/var/www/html/` | Directorio raíz por defecto (DocumentRoot) |
+| `/var/log/apache2/access.log` | Registro de accesos |
+| `/var/log/apache2/error.log` | Registro de errores |
  

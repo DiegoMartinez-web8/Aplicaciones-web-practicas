@@ -53,7 +53,9 @@ sudo ss -tulpn | grep apache2
 
 3.3. Prueba desde el terminal y desde el navegador
 ```bash
-curl -I http://localhost
+curl -I http://localhostls -l /etc/apache2/sites-enabled/
+
+
 ```
 
 Desde el navegador (idealmente de otro equipo de la red) accede a http://IP_DE_TU_SERVIDOR. Debe aparecer la página "Apache2 Ubuntu Default Page".
@@ -127,6 +129,5 @@ ls -l /etc/apache2/
 | `/var/log/apache2/error.log` | Registro de errores |
 
 Comprueba que los ficheros de sites-enabled son enlaces simbólicos:
-```bash
-ls -l /etc/apache2/sites-enabled/
-``` 
+Apache usa enlaces simbólicos para separar la creación de un sitio o módulo de su activación: las configuraciones se guardan en *-available y solo se enlazan en *-enabled para activarse, lo que permite habilitar o deshabilitar servicios al instante sin borrar archivos ni alterar la configuración principal.
+

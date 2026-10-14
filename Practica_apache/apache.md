@@ -174,7 +174,7 @@ sudo nano /etc/apache2/ports.conf
 ```bash
 sudo nano /etc/apache2/sites-available/000-default.conf
 ```
-Abre el archivo de configuración del sitio web para actualizar el puerto del servidor virtual y que coincida con el anterior.
+Abre el archivo de coMódulonfiguración del sitio web para actualizar el puerto del servidor virtual y que coincida con el anterior.
 ![Captura-6.2](./imagenes/Captura-6.2-sites-available.png)
 
 Cambia Listen 80 por Listen 8080 y <VirtualHost *:80> por <VirtualHost *:8080>.esto sirve para mejorar la seguridad.
@@ -202,4 +202,21 @@ sudo systemctl reload apache2
 
 6.5. Personalizar una página de error (por ejemplo, 404) con la directiva ErrorDocument.
 
-![Captura-6.5](./imagenes/Captura6.4-web2026-10-14 13-30-1.png)
+![Captura-6.5](./imagenes/Captura6.5-web2026.png)
+
+Completa una tabla con al menos 6 módulos 
+| Comando | Función |
+|-----|-----|
+| sudo a2enmod rewrite |	Activa el módulo mod_rewrite (reescritura de URL) |
+| sudo a2enmod headers |	Activa el módulo mod_headers (manipulación de cabeceras HTTP) |
+| sudo a2enmod ssl |	Activa el módulo mod_ssl (soporte HTTPS) |
+| sudo a2enmod dir |	Activa el módulo mod_dir (gestión de ficheros índice) |
+| sudo a2enmod alias |	Activa el módulo mod_alias (redirecciones y alias de rutas) |
+| sudo a2enmod auth_basic	| Activa el módulo mod_auth_basic (autenticación básica) |
+| sudo a2enmod status	| Activa el módulo mod_status (página de estado del servidor) |
+| sudo a2dismod status	| Desactiva el módulo mod_status del servidor |
+
+ ¿Qué ocurre si desactivas un módulo del que depende otro?
+
+Si desactivas un módulo de Apache del que depende otro, lo que ocurre principalmente es que el comando para reiniciar el servidor fallará debido a problemas de dependencias. Además, Apache se negará a arrancar si la configuración del sitio o del servidor hace referencia a directivas provistas por el módulo que acabas de deshabilitar, provocando una interrupción del servicio. Para prevenir errores y comprobar que todo está correcto antes de aplicar los cambios, puedes utilizar el comando apache2ctl configtest para verificar la sintaxis de la configuración.
+

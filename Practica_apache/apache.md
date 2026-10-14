@@ -197,5 +197,9 @@ sudo a2enconf servername
 sudo systemctl reload apache2
 ```
 6.4. Cambiar el correo del administrador (ServerAdmin en el fichero del sitio).
+
+![Captura-6.4](./imagenes/Captura-6.4-correo.png)
+
 6.5. Personalizar una página de error (por ejemplo, 404) con la directiva ErrorDocument.
 
+![Captura-6.5](./imagenes/Captura6.4-web2026-10-14 13-30-1.png)

@@ -1,3 +1,13 @@
+# Portada del Proyecto
+## Información Personal
+
+  ### Nombre: Diego Alejandro Martínez Rojas
+
+  ### Curso: 2 SMX
+
+  ### Fecha: 16/10/2026
+
+
 # Apartado 1: Comprobar el estado de ubuntu.server
 
 Comprobamos el sistema.

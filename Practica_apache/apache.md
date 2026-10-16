@@ -138,7 +138,8 @@ Haz siempre una copia de seguridad antes de modificar un fichero:
 
 l fichero /etc/apache2/apache2.conf es el archivo de configuración principal y global de Apache.
  ### ¿Qué contenido tiene el fichero? Explícalo con tus palabras.
-Contiene las directrices y parámetros fundamentales que controlan el funcionamiento general de todo el servidor web, tales como:
+Contiene las directrices y parámetros fundamentales que controlan el funcionamiento general de todo el servidor web, tales como:eñados para sistemas críticos y grandes CPDs.   
+PDF
 Las rutas de los directorios de logs y configuración.
 Las directivas de seguridad y control de acceso por carpetas.
 La carga de módulos adicionales y directivas de rendimiento (como tiempos de espera o límites de conexiones).
@@ -264,11 +265,18 @@ curl http://sitio1.local
 curl http://sitio2.local
 ```
  Captura de ambos sitios en el navegador
-![Captura-6.4](./imagenes/Captura-6.4-correo.png)
+![Captura-8.1](./imagenes/Capturasitio.local.png)
 
 
   salida de apache2ctl -S.
   
- ![Captura-6.4](./imagenes/Captura-6.4-correo.png)
+ ![Captura-8.2](./imagenes/Captura8.2.png)
 
 ¿Qué diferencia hay entre virtual hosts basados en nombre y basados en IP? ¿Cuál has usado?
+
+Diferencia: Los Virtual Hosts basados en nombre permiten que varios sitios web compartan una misma dirección IP, diferenciándose mediante el dominio que solicita el navegador. Los basados en IP asignan una dirección IP única y distinta a cada sitio web.
+
+Cuál has usado: Has utilizado Virtual Hosts basados en nombre. Esto se comprueba porque en la configuración se usa el comodín *:80 para atender cualquier IP en el puerto 80, y en el archivo /etc/hosts ambos dominios apuntan a la misma IP (127.0.0.1), diferenciándose únicamente por su nombre.
+
+# Apartado 9. Permisos y propietarios
+

@@ -220,3 +220,55 @@ Completa una tabla con al menos 6 módulos
 
 Si desactivas un módulo de Apache del que depende otro, lo que ocurre principalmente es que el comando para reiniciar el servidor fallará debido a problemas de dependencias. Además, Apache se negará a arrancar si la configuración del sitio o del servidor hace referencia a directivas provistas por el módulo que acabas de deshabilitar, provocando una interrupción del servicio. Para prevenir errores y comprobar que todo está correcto antes de aplicar los cambios, puedes utilizar el comando apache2ctl configtest para verificar la sintaxis de la configuración.
 
+# Apartado 8. Varios sitios en un mismo servidor (Virtual Hosts)
+Vas a crear dos sitios: sitio1.local y sitio2.local.
+8.1. Crear los directorios y páginas
+```bash
+sudo mkdir -p /var/www/sitio1 /var/www/sitio2
+echo "<h1>Bienvenido a SITIO 1</h1>" | sudo tee /var/www/sitio1/index.html
+echo "<h1>Bienvenido a SITIO 2</h1>" | sudo tee /var/www/sitio2/index.html
+```
+8.2. Crear los ficheros de configuración
+```bash
+sudo nano /etc/apache2/sites-available/sitio1.conf
+<VirtualHost *:80>
+    ServerName sitio1.local
+    ServerAdmin admin@sitio1.local
+    DocumentRoot /var/www/sitio1
+
+    <Directory /var/www/sitio1>
+        Options -Indexes +FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/sitio1_error.log
+    CustomLog ${APACHE_LOG_DIR}/sitio1_access.log combined
+</VirtualHost>
+``
+Repite para sitio2.conf cambiando los nombres y rutas.
+8.3. Activar los sitios y desactivar el de por defecto
+```bash
+sudo a2ensite sitio1.conf sitio2.conf
+sudo a2dissite 000-default.conf
+sudo apache2ctl configtest
+sudo systemctl reload apache2
+apache2ctl -S
+``
+8.4. Resolución de nombres. Añade en /etc/hosts (del servidor y, si puedes, del equipo cliente):
+```bash
+127.0.0.1   sitio1.local sitio2.local
+``
+8.5. Pruebas
+```bash
+curl http://sitio1.local
+curl http://sitio2.local
+```
+ Captura de ambos sitios en el navegador
+![Captura-6.4](./imagenes/Captura-6.4-correo.png)
+
+
+  salida de apache2ctl -S.
+  
+ ![Captura-6.4](./imagenes/Captura-6.4-correo.png)
+
+¿Qué diferencia hay entre virtual hosts basados en nombre y basados en IP? ¿Cuál has usado?

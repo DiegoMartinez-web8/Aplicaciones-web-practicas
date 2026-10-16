@@ -320,3 +320,7 @@ Por qué no debe ser de root ni escribible por todos:
         No debe ser de root para evitar que un fallo en Apache comprometa todo el servidor (escalada de privilegios).
 
         No debe ser escribible por todos para evitar que otros usuarios locales alteren o destruyan el sitio web.
+        Conclusión
+
+### Conclusión 
+En esta práctica he aprendido a instalar y administrar Apache, crear páginas web y configurar varios sitios en un mismo servidor, teniendo en cuenta la seguridad y los permisos.

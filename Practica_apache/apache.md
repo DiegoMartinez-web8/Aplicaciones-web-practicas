@@ -118,7 +118,7 @@ ls -l /etc/apache2/
 | Ruta | Descripción |
 | :--- | :--- |
 | `/etc/apache2/apache2.conf` | Fichero de configuración principal |
-| `/etc/apache2/ports.conf` | Puertos en los que escucha Apache |
+| `/etc/apache2/ports.conf` | Puertos en los que escuchmda Apache |
 | `/etc/apache2/sites-available/` | Sitios disponibles (definidos, no necesariamente activos) |
 | `/etc/apache2/sites-enabled/` | Sitios activos (enlaces simbólicos a sites-available) |
 | `/etc/apache2/mods-available/` y `mods-enabled/` | Módulos disponibles y activos |
@@ -280,3 +280,33 @@ Cuál has usado: Has utilizado Virtual Hosts basados en nombre. Esto se comprueb
 
 # Apartado 9. Permisos y propietarios
 
+Apartado 9. Permisos y propietarios
+Apache se ejecuta con el usuario www-data. Comprueba:
+ps aux | grep apache2
+grep -E "APACHE_RUN_(USER|GROUP)" /etc/apache2/envvars
+ls -ld /var/www/sitio1 /var/www/sitio1/index.html
+Aplica una política de permisos razonable:
+sudo chown -R www-data:www-data /var/www/sitio1
+sudo find /var/www/sitio1 -type d -exec chmod 755 {} \;
+sudo find /var/www/sitio1 -type f -exec chmod 644 {} \;
+Apartado 9. Permisos y propietarios
+Apache se ejecuta con el usuario www-data. Comprueba:
+ps aux | grep apache2
+grep -E "APACHE_RUN_(USER|GROUP)" /etc/apache2/envvars
+ls -ld /var/www/sitio1 /var/www/sitio1/index.html
+Aplica una política de permisos razonable:
+sudo chown -R www-data:www-data /var/www/sitio1
+sudo find /var/www/sitio1 -type d -exec chmod 755 {} \;
+sudo find /var/www/sitio1 -type f -exec chmod 644 {} \;
+
+   Qué significan 755 y 644?:
+
+  755 (directorios): El propietario puede leer, escribir y ejecutar; el grupo y otros solo pueden leer y entrar.
+
+  644 (archivos): El propietario puede leer y escribir; el grupo y otros solo pueden leer.
+Por qué no usar 777: Porque da acceso total de lectura, escritura y ejecución a cualquiera, permitiendo que un atacante modifique o infecte la web fácilmente.
+Por qué no debe ser de root ni escribible por todos:
+
+        No debe ser de root para evitar que un fallo en Apache comprometa todo el servidor (escalada de privilegios).
+
+        No debe ser escribible por todos para evitar que otros usuarios locales alteren o destruyan el sitio web.

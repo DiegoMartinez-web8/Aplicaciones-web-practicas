@@ -24,3 +24,39 @@ systemctl is-active apache2
 
 ```
 ![Captura-active](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-01-active.png)
+
+# Apartado 2. Instalación de MariaDB
+Para instalar 
+```bash
+sudo apt install mariadb-server -y
+```
+
+Comprueba la versión instalada:
+```bash
+mariadb --version
+```
+![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-01-active.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

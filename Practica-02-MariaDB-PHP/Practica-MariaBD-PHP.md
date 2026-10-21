@@ -23,4 +23,4 @@ sudo apt upgrade -y
 systemctl is-active apache2
 
 ```
-![Captura-active]()
+![Captura-active](Practica-02-MariaDB-PHP/Imagenes-02/Captura-01-active.png)

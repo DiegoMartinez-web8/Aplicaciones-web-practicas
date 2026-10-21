@@ -44,17 +44,22 @@ systemctl is-enabled mariadb
 ```
 # Apartado 3. Comprobación del funcionamiento
 3.1. Estado del servicio
-´´´bash
+
+```bash
 sudo systemctl status mariadb
+``` 
+![Captura-03-running](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-03-running.png)
+```bash
 systemctl is-enabled mariadb
 ```
-![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-03-running.png)
+ ![Captura-03-running](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-3.1-enabled.png)
 
 # 3.2. Entrar en la base de datos
 ```bash
 sudo mariadb
-``
-![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-.png)
+```
+![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-3.2-salida.png)
+
 
 
 

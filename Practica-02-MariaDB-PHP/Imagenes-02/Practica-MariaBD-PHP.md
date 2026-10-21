@@ -8,8 +8,19 @@
 Lo primero que vamos a hacer es deshabilitar los dos sitios virtuales que hicimos en la práctica anterior y
 dejaremos de nuevo solo uno.
 
-``bash
+```bash
 sudo a2ensite 000-default.conf
 sudo systemctl reload apache2
+```
 
-``
+Actualiza la lista de paquetes y comprueba que Apache sigue funcionando
+
+
+```bash
+
+sudo apt update
+sudo apt upgrade -y
+systemctl is-active apache2
+
+```
+![Captura-active]()

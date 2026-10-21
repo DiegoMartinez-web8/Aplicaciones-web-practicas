@@ -35,12 +35,26 @@ Comprueba la versión instalada:
 ```bash
 mariadb --version
 ```
-![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-01-active.png)
+![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-02-version.png)
+# Apartado 3. Comprobación del funcionamiento
+3.1. Estado del servicio
+```bash
+sudo systemctl status mariadb
+systemctl is-enabled mariadb
+```
+# Apartado 3. Comprobación del funcionamiento
+3.1. Estado del servicio
+´´´bash
+sudo systemctl status mariadb
+systemctl is-enabled mariadb
+```
+![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-03-running.png)
 
-
-
-
-
+# 3.2. Entrar en la base de datos
+```bash
+sudo mariadb
+``
+![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-.png)
 
 
 

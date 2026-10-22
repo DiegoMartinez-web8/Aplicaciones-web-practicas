@@ -140,17 +140,29 @@ Comprueba que Apache ejecuta PHP:
 ```bash
 echo '<?php phpinfo();' | sudo tee /var/www/html/info.php
 ```
-Abre http://IP_DE_TU_SERVIDOR/info.php en el navegador. Debe aparecer una página morada con la
-versión de PHP.
+Abre http://IP_DE_TU_SERVIDOR/info.php en el navegador. Debe aparecer una pág
 
+## Captura de php -v
+![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-6-php-v.png)
 
+## Módulos 
+ ![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-6-php-v.png)
+ 
+## Página info.php
+![Captura-version-02](/Practica-02-MariaDB-PHP/Imagenes-02/Captura-5.3-info.php.png)
 
+Borra el fichero de prueba (obligatorio):
+```bash
+sudo rm /var/www/html/info.php
+ls /var/www/htm
+```
 
+# Preguntas
+1. ¿Por qué es peligroso dejar info.php en un servidor real?
+Es un riesgo de seguridad grave porque expone información técnica detallada sobre la configuración del servidor, la versión exacta de PHP, módulos instalados, rutas del sistema y variables de entorno. Esta información facilita a posibles atacantes encontrar y explotar vulnerabilidades específicas del sistema.
 
-
-
-
-
+2. ¿Para qué sirve el paquete php-mysql?
+Permite que PHP pueda comunicarse y conectarse con la base de datos MariaDB / MySQL (imprescindible para que aplicaciones como WordPress funcionen).   
 
 
 

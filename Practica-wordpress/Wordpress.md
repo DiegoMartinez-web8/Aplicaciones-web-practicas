@@ -221,3 +221,93 @@ Al intentar subir archivos e imágenes en WordPress, saltaría un error indicand
 No se podrían instalar o actualizar plugins ni temas automáticamente desde la interfaz web (pediría credenciales de FTP o fallaría directamente).
 
 Durante la instalación inicial, WordPress no podría generar automáticamente el fichero wp-config.php, obligándote a crearlo y pegarlo manualmente.
+📸 Captura de la carpeta de WordPress y de sus permisos.
+  ![captura 1](./imagenes1/Captura4wordpress.png)]
+
+ # Apartado 5. Terminar la instalación desde el navegador (la parte gráfica)
+Ahora viene la parte visual. En el navegador de tu ordenador abre:
+http://IP_DEL_SERVIDOR
+(o http://localhost:8080 si usas el túnel). Aparecerá el asistente de instalación. Sigue estos pasos:
+
+Los textos exactos de las pantallas pueden variar un poco según la versión de WordPress, pero el orden y los datos son los mismos.
+Qué ha pasado por debajo: al enviar la pantalla 3, WordPress ha comprobado que puede entrar en la base de datos y ha creado él solo su fichero de configuración, wp-config.php. Después, en la pantalla 5, ha creado las tablas en MariaDB y tu usuario administrador.
+Inicia sesión con el usuario y la contraseña que acabas de crear. Verás el escritorio de WordPress (el panel de administración).
+📸 Captura de las pantallas 3 y 5 (con la contraseña tapada) y del escritorio de WordPress una vez dentro.
+❓ ¿Qué partes de la instalación has hecho en la terminal y cuáles en el navegador? ¿Por qué el servidor no necesita tener interfaz gráfica?
+# Apartado 6. Comprobamos que WordPress funciona
+6.1. La web pública. Abre http://IP_DEL_SERVIDOR. Debe verse tu sitio con el título que elegiste.
+6.2. El panel de administración. Abre http://IP_DEL_SERVIDOR/wp-admin e inicia sesión.
+6.3. Publica una entrada de prueba. En el panel: Entradas → Añadir nueva. Escribe un título y un texto (por ejemplo, tu nombre y la fecha), pulsa Publicar y comprueba que aparece en la web pública.
+6.4. ¿Dónde ha guardado WordPress tu entrada? En la base de datos. Compruébalo en la terminal:
+sudo mariadb wordpress -e "SHOW TABLES;"
+Verás la lista de tablas que WordPress creó (unas 12; el nombre de todas empieza por wp_):
+
+ Captura de la entrada publicada en la web y del resultado de SHOW TABLES.
+  ![captura 1](./imagenes1/Captura6.wordpress.png)]
+  ![captura 1](./imagenes1/Captura6.1.wordpress.png)]
+❓ ¿Dónde guarda WordPress las entradas que escribes: en ficheros del servidor o en la base de datos? ¿Cómo lo has comprobado?
+ WordPress guarda las entradas que escribes en la base de datos (en MariaDB/MySQL), exactamente dentro de la tabla wp_posts, y no en ficheros del disco duro.
+Los ficheros del servidor (/var/www/html/) solo contienen el código PHP que genera la estructura de la web, mientras que todo el contenido dinámico (entradas, páginas, comentarios y usuarios) se consulta y se extrae de la base de datos en tiempo real.
+
+Apartado 7. Para que no se rompa si cambia la IP (recomendado)
+WordPress apunta en su base de datos la dirección con la que lo instalaste. Si la IP de la máquina virtual cambia (por ejemplo, al reiniciarla), WordPress seguirá usando la antigua: la web se verá sin diseño y el panel te llevará a una dirección que ya no existe.
+Con dos líneas le decimos: "usa siempre la dirección con la que te estén visitando". Edita la configuración:
+```bash
+sudo nano /var/www/html/wp-config.php
+```
+Busca la línea que empieza por /* That's all, stop editing! (en nano, pulsa Ctrl+W, escribe That's all y Enter). Coloca el cursor al principio de esa línea y pega estas dos líneas, dejando una línea en blanco después:
+```bash
+define( 'WP_HOME',    'http://' . $_SERVER['HTTP_HOST'] );
+define( 'WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST'] );
+```
+Guarda con Ctrl+O, Enter, y sal con Ctrl+X. Comprueba que no hay errores:
+```bash
+php -l /var/www/html/wp-config.php
+```
+Debe responder No syntax errors detected. Recarga la web en el navegador para comprobar que sigue funcionando.
+Estas dos líneas son cómodas para un laboratorio. En un servidor real se escribiría la dirección fija del sitio.
+
+📸 Captura de las dos líneas dentro de wp-config.php y del resultado de php -l.
+
+![captura 1](./imagenes1/Captura7.0wordpress.png)]
+
+  ![captura 1](./imagenes1/Captura7.1wordpress.png)]
+
+# Apartado 8. Dos ajustes para trabajar cómodamente
+Antes de empezar a trabajar con WordPress conviene hacer dos ajustes. Sin ellos, aparecen dos problemas muy típicos.
+8.1. Direcciones "bonitas" (enlaces permanentes). Por defecto, las entradas tienen direcciones como http://IP/?p=1. WordPress puede usar direcciones más claras, como http://IP/mi-entrada/, pero para eso crea un fichero llamado .htaccess que Apache por defecto ignora. Si no lo permitimos, al cambiar el formato las entradas dan error 404.
+Primero permitimos a Apache leer ese fichero en la carpeta de WordPress:
+```bash
+sudo nano /etc/apache2/conf-available/wordpress.conf
+```
+````bash
+<Directory /var/www/html>
+    AllowOverride All
+</Directory>
+````
+Actívalo (el módulo rewrite ya lo activaste en la práctica de Apache, pero así nos aseguramos):
+```bash
+sudo a2enmod rewrite
+sudo a2enconf wordpress
+sudo apache2ctl configtest
+sudo systemctl restart apache2
+```
+Después, en el panel de WordPress: Ajustes → Enlaces permanentes → Nombre de la entrada → Guardar cambios. Abre una entrada desde la portada y comprueba que se ve y que su dirección ya es "bonita". Además, WordPress habrá creado solo el fichero .htaccess:
+````bash
+ls -la /var/www/html/.htaccess
+````
+8.2. Poder subir ficheros grandes. PHP, por defecto, solo deja subir ficheros de 2 MB. Muchos temas y plugins pesan más, y las fotos también. Subimos el límite a 64 MB:
+```bash
+printf 'upload_max_filesize = 64M\npost_max_size = 64M\n' | sudo tee /etc/php/8.3/apache2/conf.d/99-wordpress.ini
+sudo systemctl restart apache2
+````
+Compruébalo en el panel: Medios → Añadir nuevo. Debe indicar un tamaño máximo de 64 MB.
+📸 Captura de la configuración de Apache, de la dirección "bonita" de una entrada y del tamaño máximo de subida.
+
+  ![captura 1](./imagenes1/Captura7.1wordpress.png)]
+  ![captura 1](./imagenes1/Captura7.1wordpress.png)]
+
+ 
+❓ ¿Por qué las direcciones "bonitas" dan error 404 si Apache no tiene permitido leer el fichero .htaccess?
+  
+

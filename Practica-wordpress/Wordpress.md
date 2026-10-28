@@ -304,10 +304,36 @@ sudo systemctl restart apache2
 Compruébalo en el panel: Medios → Añadir nuevo. Debe indicar un tamaño máximo de 64 MB.
 📸 Captura de la configuración de Apache, de la dirección "bonita" de una entrada y del tamaño máximo de subida.
 
-  ![captura 1](./imagenes1/Captura7.1wordpress.png)]
-  ![captura 1](./imagenes1/Captura7.1wordpress.png)]
+  ![captura 1](./imagenes1/Captura8.wordpress.png)]
+  ![captura 1](./imagenes1/Captura8.2wordpress_espacio.png)]
 
  
 ❓ ¿Por qué las direcciones "bonitas" dan error 404 si Apache no tiene permitido leer el fichero .htaccess?
-  
 
+Las direcciones "bonitas" dan un error 404 porque no existen físicamente en el disco duro del servidor como archivos o carpetas reales (por ejemplo, la ruta /var/www/html/mi-entrada/ no es una carpeta existente).
+
+Para que estas direcciones funcionen, WordPress escribe unas reglas de reescritura de URLs dentro del archivo oculto .htaccess. Estas reglas le ordenan a Apache que, cuando un usuario intente acceder a una ruta que no sea un archivo físico, intercepte esa petición y se la entregue internamente a index.php para que este cargue la entrada desde la base de datos.
+
+Si Apache no tiene permitido leer el archivo .htaccess (es decir, si no se configura la directiva AllowOverride All), el servidor ignora por completo esas reglas de reescritura. Al intentar abrir http://IP/mi-entrada/, Apache busca literalmente una carpeta o archivo con ese nombre en /var/www/html/ y, al no encontrarlo, devuelve el error 404 Not Found.
+
+# Apartado 9. ¿Qué pasa si MariaDB se para?
+WordPress depende de MariaDB: sin base de datos no puede mostrar nada. Vamos a verlo. Detén MariaDB a propósito:
+```bash
+sudo systemctl stop mariadb
+````
+Recarga http://IP_DEL_SERVIDOR en el navegador. Verás un mensaje de error (en inglés, Error establishing a database connection; en español, "Error al establecer una conexión con la base de datos"). Ahora arranca MariaDB de nuevo:
+```bash
+sudo systemctl start mariadb
+systemctl is-active mariadb
+```
+Recarga la web: debe volver a funcionar.
+📸 Captura del error en el navegador y de la web recuperada.
+
+  ![captura 1](./imagenes1/Captura9.wordpress.error.png)]
+  ![captura 1](./imagenes1/Captura9.1wordpress.sol.png)]
+  
+Guía rápida cuando WordPress muestre ese error:
+    1. ¿Está MariaDB en marcha? → systemctl is-active mariadb (si no, sudo systemctl start mariadb).
+    2. ¿Siguen siendo correctos el usuario y la contraseña? → prueba a entrar con mariadb -u wp_user -p wordpress.
+
+❓ Cuando WordPress muestra "Error al establecer una conexión con la base de datos", ¿qué dos cosas comprobarías y en qué orden?
